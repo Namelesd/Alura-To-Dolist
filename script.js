@@ -1,3 +1,5 @@
+( () => {
+
 const btn = document.querySelector("[data-form-btn]");
 
 const createTask = (evento)=> {
@@ -53,3 +55,5 @@ element.classList.toggle("fas");
 
 
  }
+
+})();
