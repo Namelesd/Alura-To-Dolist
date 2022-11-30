@@ -4,12 +4,39 @@ import deleteIcon from "./components/deleteIcon.js";
 
 
 const btn = document.querySelector("[data-form-btn]");
+const Cdate = new Date();
+
+const addTask = (evento)=>{
+  const list =document.querySelector("[data-list]");
+  const task = createTask(evento);
+  list.appendChild(task);
+
+
+
+}
+
 
 const createTask = (evento)=> {
     evento.preventDefault();
     const input = document.querySelector("[data-form-input]");
-    const value=input.value;    
-    const list =document.querySelector("[data-list]");
+    const calendar = document.querySelector("[data-form-date]");
+    const value = input.value; 
+    const date = calendar.value;
+    let dateformat;
+    
+
+  if(date==""){
+    dateformat = moment(Cdate).format("DD/MM/YYYY")
+
+  }else{ dateformat = moment(date).format("DD/MM/YYYY");}
+
+
+  console.log(dateformat);
+
+  const dateElement = document.createElement("span");
+  dateElement.innerHTML = dateformat;
+
+
     const task=document.createElement("li");
     task.classList.add("card");
 
@@ -25,13 +52,14 @@ const createTask = (evento)=> {
 
       //  task.innerHTML = content;
         task.appendChild(taskContent);
+        task.appendChild(dateElement);
         task.appendChild(deleteIcon());
-        list.appendChild(task);
+        return task;
 }
 
 
 
-btn.addEventListener("click", createTask)
+btn.addEventListener("click", addTask)
 
 
 
