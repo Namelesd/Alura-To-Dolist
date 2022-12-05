@@ -1,62 +1,6 @@
-import checkComplete from "./components/checkComplete.js";
-import deleteIcon from "./components/deleteIcon.js";
-
-
+import { addTask } from "./components/addTask.js";
 
 const btn = document.querySelector("[data-form-btn]");
-const Cdate = new Date();
-
-const addTask = (evento)=>{
-  const list =document.querySelector("[data-list]");
-  const task = createTask(evento);
-  list.appendChild(task);
-
-
-
-}
-
-
-const createTask = (evento)=> {
-    evento.preventDefault();
-    const input = document.querySelector("[data-form-input]");
-    const calendar = document.querySelector("[data-form-date]");
-    const value = input.value; 
-    const date = calendar.value;
-    let dateformat;
-    
-
-  if(date==""){
-    dateformat = moment(Cdate).format("DD/MM/YYYY")
-
-  }else{ dateformat = moment(date).format("DD/MM/YYYY");}
-
-
-  console.log(dateformat);
-
-  const dateElement = document.createElement("span");
-  dateElement.innerHTML = dateformat;
-
-
-    const task=document.createElement("li");
-    task.classList.add("card");
-
-    input.value="";
-    const taskContent = document.createElement("div");
-    taskContent.appendChild(checkComplete());
-
-    const titleTask=document.createElement("span");
-    titleTask.classList.add("task");
-    titleTask.innerText = value;
-    taskContent.appendChild(titleTask);
-
-
-      //  task.innerHTML = content;
-        task.appendChild(taskContent);
-        task.appendChild(dateElement);
-        task.appendChild(deleteIcon());
-        return task;
-}
-
 
 
 btn.addEventListener("click", addTask)
