@@ -9,11 +9,11 @@ export const addTask = (evento)=>{
   list.appendChild(task);
 }
 
-const taskList = [];
+
 
 const createTask = (evento)=> {
     evento.preventDefault();
-    
+    const taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 
     const input = document.querySelector("[data-form-input]");
     const calendar = document.querySelector("[data-form-date]");
@@ -30,13 +30,9 @@ const createTask = (evento)=> {
   console.log(value);
   console.log(dateformat);
 
-
-
-
     const task=document.createElement("li");
     task.classList.add("card");
     input.value="";
-
     const taskContent = document.createElement("div");
 
     const taskObj = {
