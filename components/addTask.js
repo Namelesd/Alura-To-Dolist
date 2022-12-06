@@ -1,56 +1,60 @@
 import checkComplete from "./checkComplete.js";
 import deleteIcon from "./deleteIcon.js";
+import { readTask } from "./readTasks.js";
+
 
 const Cdate = new Date();
 
 export const addTask = (evento)=>{
+  evento.preventDefault();
+
   const list =document.querySelector("[data-list]");
-  const task = createTask(evento);
-  list.appendChild(task);
+  const input = document.querySelector("[data-form-input]");
+  const calendar = document.querySelector("[data-form-date]");
+
+  const value = input.value; 
+  const date = calendar.value;
+  let dateformat;
+
+  if(date==""){
+  dateformat = moment(Cdate).format("DD/MM/YYYY")
+  }else{ dateformat = moment(date).format("DD/MM/YYYY");}
+
+  if(value==""){
+    return
+  }
+
+input.value="";
+calendar.value="";
+const complete = false;
+
+const taskObj = {
+  value,
+  dateformat,
+  complete
+}
+
+list.innerHTML = "";
+
+const taskList = JSON.parse(localStorage.getItem("tasks")) || [];
+taskList.push(taskObj);
+localStorage.setItem("tasks",JSON.stringify(taskList));
+readTask();
+
 }
 
 
 
-const createTask = (evento)=> {
-    evento.preventDefault();
-    const taskList = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    const input = document.querySelector("[data-form-input]");
-    const calendar = document.querySelector("[data-form-date]");
-    const value = input.value; 
-    const date = calendar.value;
-
-    let dateformat;
-    
-
-  if(date==""){
-    dateformat = moment(Cdate).format("DD/MM/YYYY")
-
-  }else{ dateformat = moment(date).format("DD/MM/YYYY");}
-  console.log(value);
-  console.log(dateformat);
-
+export const createTask = ({value,dateformat,complete})=> {
     const task=document.createElement("li");
     task.classList.add("card");
-    input.value="";
+
     const taskContent = document.createElement("div");
 
-    const taskObj = {
-      value:value,
-      dateformat:dateformat,
-    }
-  
-    console.log(taskObj);
-    taskList.push(taskObj);
-    
     const dateElement = document.createElement("span");
     dateElement.innerHTML = dateformat;
   
     taskContent.appendChild(checkComplete());
-    localStorage.setItem("tasks",JSON.stringify(taskList));
-
-    console.log(taskList);
-    console.log(localStorage);
     const titleTask=document.createElement("span");
     titleTask.classList.add("task");
     titleTask.innerText = value;
