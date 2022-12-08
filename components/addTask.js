@@ -62,7 +62,7 @@ export const createTask = ({value,dateformat,complete,id})=> {
 
 
     const dateElement = document.createElement("span");
-    dateElement.innerHTML = dateformat;
+    //dateElement.innerHTML = dateformat;
   
 
 
